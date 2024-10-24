@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:15 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/19 12:39:32 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/23 22:46:33 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct s_data
 {
+	size_t			start;
 	int				philo_count;
 	int				time_to_die;
 	int				time_to_eat;
@@ -30,7 +31,6 @@ typedef struct s_data
 	int				full;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
-	struct timeval	start;
 }					t_data;
 
 typedef struct s_philo
@@ -39,7 +39,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				eat_count;
-	int				last_meal;
+	size_t			last_meal;
 	pthread_t		thread;
 	struct s_data	*data;
 }					t_philo;
