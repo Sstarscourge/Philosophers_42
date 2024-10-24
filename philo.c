@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:11 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/24 13:05:05 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/24 13:31:35 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	parse_args(t_data *data, int ac, char **av)
 		data->eat_count = atoi(av[5]);
 	else
 		data->eat_count = -1;
-	if (data->time_to_die < 60
+	if (data->philo_count < 1 || data->time_to_die < 60
 		|| data->time_to_eat < 60 || data->time_to_sleep < 60
 		|| (ac == 6 && data->eat_count < 1))
 		return (1);
@@ -249,6 +249,19 @@ int	init_philo(t_philo *philo, t_data *data)
 	return (0);
 }
 
+void	destroy_all(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&data->print);
+}
+
 int	main(int ac, char **av)
 {
 	t_data		data;
@@ -271,6 +284,7 @@ int	main(int ac, char **av)
 		return (printf("Error: mutex init failed\n"));
 	if (init_philo(philo, &data))
 		return (printf("Error: thread init failed\n"));
+	destroy_all(&data, philo);
 	free(data.forks);
 	free(philo);
 	return (0);
