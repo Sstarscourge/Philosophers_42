@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:11 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 13:31:30 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 22:12:06 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,9 @@ int	main(int ac, char **av)
 {
 	t_data		data;
 	t_philo		*philo;
-	int			flag;
 
-	flag = parse_args(&data, ac, av);
-	if (flag)
-	{
-		if (flag == 1)
-			return (printf("Error: wrong arguments\n"));
-		else
-			return (0);
-	}
+	if (parse_args(&data, ac, av))
+		return (0);
 	philo = malloc(sizeof(t_philo) * data.philo_count);
 	if (!philo)
 		return (printf("Error: malloc failed\n"));

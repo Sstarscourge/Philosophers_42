@@ -6,14 +6,14 @@
 #    By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/15 12:19:09 by starscourge       #+#    #+#              #
-#    Updated: 2024/10/25 13:49:44 by starscourge      ###   ########.fr        #
+#    Updated: 2024/10/25 22:08:25 by starscourge      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 
-NAME = philosophers
+NAME = philo
 SRCS = philo.c parse_and_initialize.c routine.c utils.c
 		
 OBJS = ${SRCS:.c=.o}

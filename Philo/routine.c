@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 00:13:06 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 13:34:30 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 22:10:41 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	data = philo->data;
 	if (philo->id % 2)
-		usleep(42);
+		my_usleep(42);
 	while (1)
 	{
 		pthread_mutex_lock(&data->print);

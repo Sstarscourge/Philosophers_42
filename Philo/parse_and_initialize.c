@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 00:11:07 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 13:18:12 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 22:11:49 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parse_args(t_data *data, int ac, char **av)
 	if (data->philo_count < 2)
 	{
 		one_philo(data);
-		return (2);
+		return (1);
 	}
 	return (0);
 }
