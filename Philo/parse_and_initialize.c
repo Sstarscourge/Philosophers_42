@@ -6,12 +6,11 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 00:11:07 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 00:32:59 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 13:18:12 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	parse_args(t_data *data, int ac, char **av)
 {
@@ -87,4 +86,17 @@ int	init_philo(t_philo *philo, t_data *data)
 		i++;
 	}
 	return (0);
+}
+
+void	one_philo(t_data	*data)
+{
+	printf("%zu %d has taken a fork\n", get_time() - data->start, 1);
+	while (1)
+	{
+		if (get_time() - data->start > data->time_to_die)
+		{
+			printf("%zu %d died\n", get_time() - data->start, 1);
+			break ;
+		}
+	}
 }

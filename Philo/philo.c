@@ -6,7 +6,7 @@
 /*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:11 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 00:42:44 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 13:31:30 by starscourge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,39 @@ void	print_routine(t_philo *philo, char	*status)
 	printf("%zu %d %s\n", get_time() - data->start, philo->id, status);
 }
 
+int	check_victim_or_full(t_data *data, t_philo	*philo)
+{
+	if (data->eat_count != (size_t)-1
+		&& philo->eat_count >= data->eat_count)
+		return (1);
+	if (philo->eat_count == 0)
+	{
+		if (get_time() - data->start > data->time_to_die)
+		{
+			philo->data->dead = 1;
+			printf("%zu %d died\n", get_time() - data->start, philo->id);
+			return (1);
+		}
+	}
+	else
+	{
+		if (get_time() - data->start
+			- philo->last_meal > data->time_to_die)
+		{
+			philo->data->dead = 1;
+			printf("%zu %d died\n", get_time() - data->start, philo->id);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	jalalat_badr(t_philo *philo)
 {
 	t_data	*data;
 	int		i;
-	int		stop_simulation;
 
 	i = 0;
-	stop_simulation = 0;
 	while (1)
 	{
 		i = 0;
@@ -42,39 +67,14 @@ void	jalalat_badr(t_philo *philo)
 		{
 			data = philo[i].data;
 			pthread_mutex_lock(&data->print);
-			if (data->eat_count != (size_t)-1 && philo[i].eat_count >= data->eat_count)
+			if (check_victim_or_full(data, &philo[i]))
 			{
-				stop_simulation = -1;
 				pthread_mutex_unlock(&data->print);
-				break ;
-			}
-			if (philo->eat_count == 0)
-			{
-				if (get_time() - data->start > data->time_to_die)
-				{
-					philo[i].data->dead = 1;
-					printf("%zu %d died\n", get_time() - data->start, philo[i].id);
-					stop_simulation = -1;
-					pthread_mutex_unlock(&data->print);
-					break ;
-				}
-			}
-			else
-			{
-				if (get_time() - data->start - philo[i].last_meal > data->time_to_die)
-				{
-					philo[i].data->dead = 1;
-					printf("%zu %d died\n", get_time() - data->start, philo[i].id);
-					stop_simulation = -1;
-					pthread_mutex_unlock(&data->print);
-					break ;
-				}
+				return ;
 			}
 			pthread_mutex_unlock(&data->print);
 			i++;
 		}
-		if (stop_simulation == -1)
-			break ;
 	}
 }
 
@@ -83,7 +83,6 @@ int	main(int ac, char **av)
 	t_data		data;
 	t_philo		*philo;
 	int			flag;
-
 
 	flag = parse_args(&data, ac, av);
 	if (flag)
