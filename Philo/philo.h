@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fidriss <fidriss@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:15 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 00:35:22 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/25 22:57:29 by fidriss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_data
 	size_t			time_to_sleep;
 	size_t			eat_count;
 	int				dead;
-	int				full;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 }					t_data;

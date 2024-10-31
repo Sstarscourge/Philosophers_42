@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fidriss <fidriss@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:19:11 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 22:12:06 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/28 00:21:25 by fidriss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	print_routine(t_philo *philo, char	*status)
 
 	data = philo->data;
 	if (data->eat_count != (size_t)-1 && philo->eat_count >= data->eat_count)
-	{
-		data->full = 1;
 		return ;
-	}
 	if (data->dead == 1)
 		return ;
 	printf("%zu %d %s\n", get_time() - data->start, philo->id, status);

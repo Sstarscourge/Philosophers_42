@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_initialize.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: starscourge <starscourge@student.42.fr>    +#+  +:+       +#+        */
+/*   By: fidriss <fidriss@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 00:11:07 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/25 22:11:49 by starscourge      ###   ########.fr       */
+/*   Updated: 2024/10/31 12:34:31 by fidriss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	parse_args(t_data *data, int ac, char **av)
 {
+	pthread_t	thread;
+
 	if (ac < 5 || ac > 6)
 		return (1);
 	if (check_args(ac, av))
@@ -27,13 +29,12 @@ int	parse_args(t_data *data, int ac, char **av)
 		data->eat_count = ft_atoi(av[5]);
 	else
 		data->eat_count = -1;
-	if (data->philo_count < 1 || data->time_to_die < 60
-		|| data->time_to_eat < 60 || data->time_to_sleep < 60
-		|| (ac == 6 && data->eat_count < 1))
+	if (data->philo_count < 1 || (ac == 6 && data->eat_count < 1))
 		return (1);
-	if (data->philo_count < 2)
+	if (data->philo_count == 1)
 	{
-		one_philo(data);
+		pthread_create(&thread, NULL, (void *)one_philo, data);
+		pthread_join(thread, NULL);
 		return (1);
 	}
 	return (0);
@@ -56,7 +57,6 @@ int	init_data(t_data *data)
 	if (pthread_mutex_init(&data->print, NULL))
 		return (1);
 	data->dead = 0;
-	data->full = 0;
 	return (0);
 }
 
@@ -90,12 +90,23 @@ int	init_philo(t_philo *philo, t_data *data)
 
 void	one_philo(t_data	*data)
 {
+	data->forks = malloc(sizeof(pthread_mutex_t) * 1);
+	if (!data->forks)
+		return ;
+	pthread_mutex_init(&data->forks[0], NULL);
+	pthread_mutex_init(&data->print, NULL);
+	pthread_mutex_lock(&data->forks[0]);
+	pthread_mutex_lock(&data->print);
 	printf("%zu %d has taken a fork\n", get_time() - data->start, 1);
 	while (1)
 	{
 		if (get_time() - data->start > data->time_to_die)
 		{
 			printf("%zu %d died\n", get_time() - data->start, 1);
+			pthread_mutex_unlock(&data->forks[0]);
+			pthread_mutex_unlock(&data->print);
+			pthread_mutex_destroy(&data->forks[0]);
+			pthread_mutex_destroy(&data->print);
 			break ;
 		}
 	}
