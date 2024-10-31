@@ -6,7 +6,7 @@
 /*   By: fidriss <fidriss@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 00:11:07 by starscourge       #+#    #+#             */
-/*   Updated: 2024/10/31 12:34:31 by fidriss          ###   ########.fr       */
+/*   Updated: 2024/10/31 16:56:42 by fidriss          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	one_philo(t_data	*data)
 			pthread_mutex_unlock(&data->print);
 			pthread_mutex_destroy(&data->forks[0]);
 			pthread_mutex_destroy(&data->print);
+			free(data->forks);
 			break ;
 		}
 	}
